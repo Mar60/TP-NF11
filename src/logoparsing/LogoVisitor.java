@@ -60,4 +60,32 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFpos(LogoParser.FposContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLc(LogoParser.LcContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBc(LogoParser.BcContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ve}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVe(LogoParser.VeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code fcc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFcc(LogoParser.FccContext ctx);
 }

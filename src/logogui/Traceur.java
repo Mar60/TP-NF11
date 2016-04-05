@@ -6,6 +6,7 @@
  */
 package logogui;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 
@@ -16,6 +17,7 @@ public class Traceur {
 	private double posx = initx, posy = inity; // position courante
 	private int angle = 90;
 	private double teta;
+	private boolean isCrayonLeve = false;
 	
 	public Traceur() {
 		setTeta();
@@ -36,7 +38,9 @@ public class Traceur {
 		int y1 = toInt(posy);
 		int x2 = toInt(a);
 		int y2 = toInt(b);
-		g.getChildren().add(new Line(x1,y1,x2,y2));
+		if(!isCrayonLeve){
+			g.getChildren().add(new Line(x1,y1,x2,y2));
+		}
 		posx = a;
 		posy = b;
 	}
@@ -47,7 +51,9 @@ public class Traceur {
 		int y1 = toInt(posy);
 		int x2 = toInt(a);
 		int y2 = toInt(b);
-		g.getChildren().add(new Line(x1,y1,x2,y2));
+		if(!isCrayonLeve){
+			g.getChildren().add(new Line(x1,y1,x2,y2));
+		}
 		posx = a;
 		posy = b;
 	}
@@ -61,14 +67,38 @@ public class Traceur {
 		setTeta();
 	}
 	
-	//TODO : changer l'orientation du repere (y vers le haut, x vers la droite)
 	public void changePos(double r1, double r2){
 		posx = toInt(r1)+initx;
 		posy = toInt(r2)+inity;
 	}
 	
+	public void leveCrayon(){
+		isCrayonLeve = true;
+	}
+	
+	public void baisseCrayon(){
+		isCrayonLeve = false;
+	}
+	
 	private void setTeta() {
 		teta = Math.toRadians(angle);
+	}
+
+	public void videEcran() {
+		// Récupération du controlleur
+		FXMLLoader loader = new FXMLLoader(
+				  getClass().getResource(
+				    "customerDialog.fxml"
+				  )
+				);
+		LogoController controller = loader.<LogoController>getController();
+		// Il y a une méthode pour vider l'écran dans le controlleur
+		controller.clearView();
+	}
+
+	public void changeCouleur() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

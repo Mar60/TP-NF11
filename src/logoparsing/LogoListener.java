@@ -90,4 +90,52 @@ public interface LogoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFpos(LogoParser.FposContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterLc(LogoParser.LcContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitLc(LogoParser.LcContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterBc(LogoParser.BcContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitBc(LogoParser.BcContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ve}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterVe(LogoParser.VeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ve}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitVe(LogoParser.VeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fcc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterFcc(LogoParser.FccContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fcc}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitFcc(LogoParser.FccContext ctx);
 }

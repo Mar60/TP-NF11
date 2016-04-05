@@ -17,6 +17,10 @@ instruction :
   | 'td' INT # td
   | 'tg' INT # tg
   | 're' INT # re
-  | 'fpos' '['INT INT']' # fpos
+  | 'fpos' '[' ('+' | '-') ? INT ('+' | '-') ? INT ']' # fpos
+  | 'lc' # lc
+  | 'bc' # bc
+  | 've' # ve
+  | 'fcc' # fcc
 ;  
    

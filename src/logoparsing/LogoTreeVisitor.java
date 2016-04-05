@@ -12,6 +12,10 @@ import logoparsing.LogoParser.ReContext;
 import logoparsing.LogoParser.TdContext;
 import logoparsing.LogoParser.TgContext;
 import logoparsing.LogoParser.FposContext;
+import logoparsing.LogoParser.LcContext;
+import logoparsing.LogoParser.BcContext;
+import logoparsing.LogoParser.VeContext;
+import logoparsing.LogoParser.FccContext;
 
 public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	Traceur traceur;
@@ -75,5 +79,28 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		Log.append("visitFpos\n" );
 		return 0;
 	}
+	@Override
+	public Integer visitLc(LcContext ctx) {
+		traceur.leveCrayon();
+		Log.append("visitLc\n" );
+		return 0;
+	}
 	
+	public Integer visitBc(BcContext ctx) {
+		traceur.baisseCrayon();
+		Log.append("visitBc\n" );
+		return 0;
+	}
+	
+	public Integer visitVe(VeContext ctx) {
+		traceur.videEcran();
+		Log.append("visitVe\n" );
+		return 0;
+	}
+	
+	public Integer visitFcc(FccContext ctx) {
+		traceur.changeCouleur();
+		Log.append("visitFcc\n" );
+		return 0;
+	}
 }
