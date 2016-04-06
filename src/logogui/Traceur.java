@@ -68,8 +68,8 @@ public class Traceur {
 	}
 	
 	public void changePos(double r1, double r2){
-		posx = toInt(r1)+initx;
-		posy = toInt(r2)+inity;
+		posx = initx + r1;
+		posy = inity - toInt(r2);
 	}
 	
 	public void leveCrayon(){
@@ -85,14 +85,14 @@ public class Traceur {
 	}
 
 	public void videEcran() {
-		// Récupération du controlleur
+		// Recuperation du controlleur
 		FXMLLoader loader = new FXMLLoader(
 				  getClass().getResource(
 				    "customerDialog.fxml"
 				  )
 				);
 		LogoController controller = loader.<LogoController>getController();
-		// Il y a une méthode pour vider l'écran dans le controlleur
+		// Il y a une methode pour vider l'ecran dans le controlleur
 		controller.clearView();
 	}
 

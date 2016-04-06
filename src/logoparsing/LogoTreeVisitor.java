@@ -85,19 +85,20 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		Log.append("visitLc\n" );
 		return 0;
 	}
-	
+	@Override
 	public Integer visitBc(BcContext ctx) {
 		traceur.baisseCrayon();
 		Log.append("visitBc\n" );
 		return 0;
 	}
-	
+	@Override
 	public Integer visitVe(VeContext ctx) {
 		traceur.videEcran();
 		Log.append("visitVe\n" );
 		return 0;
 	}
-	
+
+	@Override
 	public Integer visitFcc(FccContext ctx) {
 		traceur.changeCouleur();
 		Log.append("visitFcc\n" );

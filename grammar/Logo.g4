@@ -22,5 +22,6 @@ instruction :
   | 'bc' # bc
   | 've' # ve
   | 'fcc' # fcc
+
 ;  
    
