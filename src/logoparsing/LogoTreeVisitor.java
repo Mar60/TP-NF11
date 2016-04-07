@@ -71,11 +71,11 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	@Override
 	public Integer visitFpos(FposContext ctx) {
 		visitChildren(ctx);
-		String intTextX = ctx.INT().get(0).getText(); 
-		String intTextY = ctx.INT().get(1).getText(); 
-		setAttValue(ctx.INT().get(0), Integer.valueOf(intTextX));
-		setAttValue(ctx.INT().get(1), Integer.valueOf(intTextY));
-		traceur.changePos(getAttValue(ctx.INT().get(0)), getAttValue(ctx.INT().get(1)));
+		String intTextX = ctx.NB().get(0).getText();
+		String intTextY = ctx.NB().get(1).getText();
+		setAttValue(ctx.NB().get(0), Integer.valueOf(intTextX));
+		setAttValue(ctx.NB().get(1), Integer.valueOf(intTextY));
+		traceur.changePos(getAttValue(ctx.NB().get(0)), getAttValue(ctx.NB().get(1)));
 		Log.append("visitFpos\n" );
 		return 0;
 	}
@@ -100,7 +100,10 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 
 	@Override
 	public Integer visitFcc(FccContext ctx) {
-		traceur.changeCouleur();
+		visitChildren(ctx);
+		String intText = ctx.INT().getText();
+		setAttValue(ctx.INT(), Integer.valueOf(intText));
+		traceur.changeCouleur(getAttValue(ctx.INT()));
 		Log.append("visitFcc\n" );
 		return 0;
 	}

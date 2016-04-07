@@ -8,7 +8,11 @@ package logogui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+
+import java.awt.*;
 
 public class Traceur {
 	private static Traceur instance;
@@ -18,6 +22,7 @@ public class Traceur {
 	private int angle = 90;
 	private double teta;
 	private boolean isCrayonLeve = false;
+	private Color lineColor = Color.BLACK;
 	
 	public Traceur() {
 		setTeta();
@@ -39,7 +44,9 @@ public class Traceur {
 		int x2 = toInt(a);
 		int y2 = toInt(b);
 		if(!isCrayonLeve){
-			g.getChildren().add(new Line(x1,y1,x2,y2));
+			Line tmpLine = new Line(x1,y1,x2,y2);
+			tmpLine.setStroke(lineColor);
+			g.getChildren().add(tmpLine);
 		}
 		posx = a;
 		posy = b;
@@ -52,7 +59,9 @@ public class Traceur {
 		int x2 = toInt(a);
 		int y2 = toInt(b);
 		if(!isCrayonLeve){
-			g.getChildren().add(new Line(x1,y1,x2,y2));
+			Line tmpLine = new Line(x1,y1,x2,y2);
+			tmpLine.setStroke(lineColor);
+			g.getChildren().add(tmpLine);
 		}
 		posx = a;
 		posy = b;
@@ -68,7 +77,7 @@ public class Traceur {
 	}
 	
 	public void changePos(double r1, double r2){
-		posx = initx + r1;
+		posx = initx + toInt(r1);
 		posy = inity - toInt(r2);
 	}
 	
@@ -85,19 +94,40 @@ public class Traceur {
 	}
 
 	public void videEcran() {
-		// Recuperation du controlleur
-		FXMLLoader loader = new FXMLLoader(
-				  getClass().getResource(
-				    "customerDialog.fxml"
-				  )
-				);
-		LogoController controller = loader.<LogoController>getController();
-		// Il y a une methode pour vider l'ecran dans le controlleur
-		controller.clearView();
+		g.getChildren().clear();
+		//TODO see if we put the cursor at the middle of the screen
 	}
 
-	public void changeCouleur() {
-		// TODO Auto-generated method stub
+	public void changeCouleur(double r) {
+		int colorIndex = toInt(r) % 8;
+		switch (colorIndex){
+			case 0 ://noir
+				lineColor =Color.BLACK;
+				break;
+			case 1 ://rouge
+				lineColor =Color.RED;
+				break;
+			case 2 ://vert
+				lineColor =Color.GREEN;
+				break;
+			case 3 ://jaune
+				lineColor =Color.YELLOW;
+				break;
+			case 4 ://bleu
+				lineColor =Color.BLUE;
+				break;
+			case 5 ://violet
+				lineColor =Color.PURPLE;
+				break;
+			case 6 ://bleu clair
+				lineColor =Color.LIGHTBLUE;
+				break;
+			case 7 ://blanc
+				lineColor =Color.WHITE;
+				break;
+			default:
+				System.out.println("Error color not valid");
+		}
 		
 	}
 	
