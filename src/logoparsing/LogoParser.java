@@ -317,9 +317,9 @@ public class LogoParser extends Parser {
 		}
 	}
 	public static class FposContext extends InstructionContext {
-		public List<TerminalNode> NB() { return getTokens(LogoParser.NB); }
-		public TerminalNode NB(int i) {
-			return getToken(LogoParser.NB, i);
+		public List<TerminalNode> INT() { return getTokens(LogoParser.INT); }
+		public TerminalNode INT(int i) {
+			return getToken(LogoParser.INT, i);
 		}
 		public FposContext(InstructionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -408,9 +408,9 @@ public class LogoParser extends Parser {
 				setState(22);
 				match(T__5);
 				setState(23);
-				match(NB);
+				match(INT);
 				setState(24);
-				match(NB);
+				match(INT);
 				setState(25);
 				match(T__6);
 				}
@@ -472,7 +472,7 @@ public class LogoParser extends Parser {
 		"\f\5\6\4\2\13\n\3\2\2\2\f\r\3\2\2\2\r\13\3\2\2\2\r\16\3\2\2\2\16\5\3\2"+
 		"\2\2\17\20\7\3\2\2\20\"\7\16\2\2\21\22\7\4\2\2\22\"\7\16\2\2\23\24\7\5"+
 		"\2\2\24\"\7\16\2\2\25\26\7\6\2\2\26\"\7\16\2\2\27\30\7\7\2\2\30\31\7\b"+
-		"\2\2\31\32\7\17\2\2\32\33\7\17\2\2\33\"\7\t\2\2\34\"\7\n\2\2\35\"\7\13"+
+		"\2\2\31\32\7\16\2\2\32\33\7\16\2\2\33\"\7\t\2\2\34\"\7\n\2\2\35\"\7\13"+
 		"\2\2\36\"\7\f\2\2\37 \7\r\2\2 \"\7\16\2\2!\17\3\2\2\2!\21\3\2\2\2!\23"+
 		"\3\2\2\2!\25\3\2\2\2!\27\3\2\2\2!\34\3\2\2\2!\35\3\2\2\2!\36\3\2\2\2!"+
 		"\37\3\2\2\2\"\7\3\2\2\2\4\r!";
