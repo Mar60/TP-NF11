@@ -14,6 +14,48 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by the {@code arule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArule(LogoParser.AruleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code mult}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMult(LogoParser.MultContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSum(LogoParser.SumContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt(LogoParser.IntContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parent}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParent(LogoParser.ParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code hasard}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHasard(LogoParser.HasardContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LogoParser#programme}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -77,11 +77,11 @@ public class Traceur {
 	}
 	
 	public void changePos(double r1, double r2){
-		/*posx = initx + toInt(r1);
-		posy = inity - toInt(r2);*/
+		posx = initx + toInt(r1);
+		posy = inity - toInt(r2);
 		//position absolue
-		posx = toInt(r1);
-		posy = toInt(r2);
+		//posx = toInt(r1);
+		//posy = toInt(r2);
 	}
 	
 	public void leveCrayon(){

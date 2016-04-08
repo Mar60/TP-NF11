@@ -11,6 +11,78 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface LogoListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by the {@code arule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterArule(LogoParser.AruleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitArule(LogoParser.AruleContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code mult}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMult(LogoParser.MultContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code mult}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMult(LogoParser.MultContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterSum(LogoParser.SumContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitSum(LogoParser.SumContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt(LogoParser.IntContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt(LogoParser.IntContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parent}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterParent(LogoParser.ParentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parent}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitParent(LogoParser.ParentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code hasard}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterHasard(LogoParser.HasardContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code hasard}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitHasard(LogoParser.HasardContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LogoParser#programme}.
 	 * @param ctx the parse tree
 	 */
