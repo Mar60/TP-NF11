@@ -37,5 +37,6 @@ instruction :
   | 'bc' # bc
   | 've' # ve
   | 'fcc' INT # fcc
+  | 'repete' exp '[' liste_instructions ']' #repete
 ;  
    

@@ -130,4 +130,11 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFcc(LogoParser.FccContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code repete}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRepete(LogoParser.RepeteContext ctx);
 }

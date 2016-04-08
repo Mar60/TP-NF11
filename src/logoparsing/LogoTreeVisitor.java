@@ -158,10 +158,18 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	public Integer visitHasard(LogoParser.HasardContext ctx) {
 		visit(ctx.exp());
 		double value = getAttValue(ctx.exp());
-		/*Random rd = new Random();
-		rd.*/
 		double nombreAleatoire = (Math.random() * (value + 1));
 		setAttValue(ctx, nombreAleatoire);
+		return 0;
+	}
+
+	@Override
+	public Integer visitRepete(LogoParser.RepeteContext ctx) {
+		visit(ctx.getChild(1));
+		double nbIteration = getAttValue(ctx.exp());
+		for(int i = 0; i < (int)nbIteration ; i++)
+			visit(ctx.liste_instructions());
+		Log.append("visitRepete\n" );
 		return 0;
 	}
 }

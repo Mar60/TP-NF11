@@ -210,4 +210,16 @@ public interface LogoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFcc(LogoParser.FccContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code repete}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepete(LogoParser.RepeteContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code repete}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepete(LogoParser.RepeteContext ctx);
 }
