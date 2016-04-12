@@ -2,6 +2,7 @@ package logoparsing;
 
 import javafx.scene.Group;
 
+import org.antlr.v4.runtime.misc.DoubleKeyMap;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
@@ -18,10 +19,12 @@ import logoparsing.LogoParser.VeContext;
 import logoparsing.LogoParser.FccContext;
 
 import java.util.Random;
+import java.util.Stack;
 
 public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	Traceur traceur;
 	ParseTreeProperty<Double> atts = new ParseTreeProperty<Double>();
+	Stack<Double> pileRepete = new Stack<>();
 
 	public LogoTreeVisitor() {
 		super();
@@ -167,9 +170,20 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	public Integer visitRepete(LogoParser.RepeteContext ctx) {
 		visit(ctx.getChild(1));
 		double nbIteration = getAttValue(ctx.exp());
-		for(int i = 0; i < (int)nbIteration ; i++)
+		for(int i = 0; i < (int)nbIteration ; i++){
+			pileRepete.push((double) i);
 			visit(ctx.liste_instructions());
+			pileRepete.pop();
+		}
 		Log.append("visitRepete\n" );
 		return 0;
 	}
+
+	@Override
+	public Integer visitLoop(LogoParser.LoopContext ctx) {
+		double value = 0;
+		if(!pileRepete.isEmpty())
+			value = pileRepete.peek();
+		setAttValue(ctx, value);
+		return 0;	}
 }

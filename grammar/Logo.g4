@@ -15,6 +15,7 @@ exp : exp ('*'|'/') exp #mult
 atom : INT          #int
      | '(' exp ')'  #parent
      | 'hasard' exp # hasard
+     | 'loop'       #loop
      ;
      /*
      Avec hasard placé en dessous de mult et sum, il a une priorité inférieure à ces derniers, donc :
