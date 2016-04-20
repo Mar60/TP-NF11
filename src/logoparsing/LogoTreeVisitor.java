@@ -68,7 +68,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	@Override
 	public Integer visitFpos(FposContext ctx) {
 		visitChildren(ctx);
-		String intTextXSign = ctx.SIGN().get(0).getText();
+		/*String intTextXSign = ctx.SIGN().get(0).getText();
 		String intTextX = ctx.INT().get(0).getText();
 
 		String intTextYSign = ctx.SIGN().get(1).getText();
@@ -76,7 +76,9 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 
 		setAttValue(ctx.INT().get(0), Integer.valueOf(intTextXSign + intTextX));
 		setAttValue(ctx.INT().get(1), Integer.valueOf(intTextYSign + intTextY));
-		traceur.changePos(getAttValue(ctx.INT().get(0)), getAttValue(ctx.INT().get(1)));
+		traceur.changePos(getAttValue(ctx.INT().get(0)), getAttValue(ctx.INT().get(1)));*/
+
+		traceur.changePos(getAttValue(ctx.atom(0)), getAttValue(ctx.atom(1)));
 		Log.append("visitFpos\n" );
 		return 0;
 	}
@@ -102,9 +104,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	@Override
 	public Integer visitFcc(FccContext ctx) {
 		visitChildren(ctx);
-		String intText = ctx.INT().getText();
-		setAttValue(ctx.INT(), Integer.valueOf(intText));
-		traceur.changeCouleur(getAttValue(ctx.INT()));
+		traceur.changeCouleur(getAttValue(ctx.exp()));
 		Log.append("visitFcc\n" );
 		return 0;
 	}
@@ -185,5 +185,15 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		if(!pileRepete.isEmpty())
 			value = pileRepete.peek();
 		setAttValue(ctx, value);
-		return 0;	}
+		return 0;
+	}
+
+	@Override
+	public Integer visitSigInt(LogoParser.SigIntContext ctx) {
+		visitChildren(ctx);
+		String signedIntText = ctx.getChild(0).getText() + ctx.INT().getText() ;
+		setAttValue(ctx, Double.valueOf(signedIntText));
+		Log.append("visitSigInt\n" );
+		return 0;
+	}
 }

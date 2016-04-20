@@ -63,6 +63,13 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoop(LogoParser.LoopContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code sigInt}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSigInt(LogoParser.SigIntContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LogoParser#programme}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
