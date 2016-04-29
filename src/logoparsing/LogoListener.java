@@ -107,6 +107,66 @@ public interface LogoListener extends ParseTreeListener {
 	 */
 	void exitSigInt(LogoParser.SigIntContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code variable}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariable(LogoParser.VariableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code variable}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariable(LogoParser.VariableContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logiqueParent}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogiqueParent(LogoParser.LogiqueParentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logiqueParent}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogiqueParent(LogoParser.LogiqueParentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logiqueEt}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogiqueEt(LogoParser.LogiqueEtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logiqueEt}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogiqueEt(LogoParser.LogiqueEtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code boolOperation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolOperation(LogoParser.BoolOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code boolOperation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolOperation(LogoParser.BoolOperationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logiqueOu}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogiqueOu(LogoParser.LogiqueOuContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logiqueOu}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogiqueOu(LogoParser.LogiqueOuContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LogoParser#programme}.
 	 * @param ctx the parse tree
 	 */
@@ -246,4 +306,40 @@ public interface LogoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRepete(LogoParser.RepeteContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code donne}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterDonne(LogoParser.DonneContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code donne}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitDonne(LogoParser.DonneContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code si}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterSi(LogoParser.SiContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code si}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitSi(LogoParser.SiContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tantque}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterTantque(LogoParser.TantqueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tantque}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitTantque(LogoParser.TantqueContext ctx);
 }

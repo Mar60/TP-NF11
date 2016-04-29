@@ -25,6 +25,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	Traceur traceur;
 	ParseTreeProperty<Double> atts = new ParseTreeProperty<Double>();
 	Stack<Double> pileRepete = new Stack<>();
+	VariableMap variableMap = new VariableMap();
 
 	public LogoTreeVisitor() {
 		super();
@@ -33,6 +34,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	      traceur = new Traceur();
 	      traceur.setGraphics(g);
     }
+
 	public void setAttValue(ParseTree node, double value) {
 		atts.put(node, value);
 	}
@@ -194,6 +196,120 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		String signedIntText = ctx.getChild(0).getText() + ctx.INT().getText() ;
 		setAttValue(ctx, Double.valueOf(signedIntText));
 		Log.append("visitSigInt\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitDonne(LogoParser.DonneContext ctx) {
+		visitChildren(ctx);
+		String variableId = ctx.ID().toString();
+		Double value = getAttValue(ctx.exp());
+		variableMap.createVariable(variableId,value);
+		Log.append("visitDonne "+variableId +" : "+value+"\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitVariable(LogoParser.VariableContext ctx) {
+		visitChildren(ctx);
+		String variableId = ctx.ID().toString();
+		setAttValue(ctx,variableMap.getElement(variableId));
+		Log.append("visitVariable\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitBoolOperation(LogoParser.BoolOperationContext ctx) {
+		visitChildren(ctx);
+		Double left = getAttValue(ctx.exp(0));
+		Double right = getAttValue(ctx.exp(1));
+		String booleanOperator = ctx.getChild(1).toString();
+		Integer resultOperation;
+
+		int compare = left.compareTo(right);
+		switch (booleanOperator){
+			case "<":
+				resultOperation = (compare < 0)? 1 : 0;
+				break;
+			case ">":
+				resultOperation = (compare > 0)? 1 : 0;
+				break;
+			case "<=":
+				resultOperation = (compare <= 0)? 1 : 0;
+				break;
+			case ">=":
+				resultOperation = (compare >= 0)? 1 : 0;
+				break;
+			case "!=":
+				resultOperation = (compare != 0)? 1 : 0;
+				break;
+			case "==":
+				resultOperation = (compare == 0)? 1 : 0;
+				break;
+			default:
+				resultOperation = 0;
+		}
+		setAttValue(ctx, resultOperation);
+		Log.append("visitBoolOperation : "+resultOperation+"\n" );
+		return 0;
+	}
+
+
+	@Override
+	public Integer visitSi(LogoParser.SiContext ctx) {
+		visit(ctx.getChild(1));
+		int isConditionTrue = (int) getAttValue(ctx.expbool());
+
+		if(isConditionTrue == 1){
+			visit(ctx.liste_instructions(0));
+		}
+		else if(isConditionTrue == 0 ){
+			if(ctx.liste_instructions().size()==2) {
+				visit(ctx.liste_instructions(1));
+			}
+		}
+		Log.append("visitSi\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitTantque(LogoParser.TantqueContext ctx) {
+		visit(ctx.getChild(1));
+		int isConditionTrue = (int) getAttValue(ctx.expbool());
+		while(isConditionTrue==1){
+			visit(ctx.liste_instructions());
+			visit(ctx.getChild(1));
+			isConditionTrue = (int) getAttValue(ctx.expbool());
+		}
+		Log.append("visitTantque\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitLogiqueEt(LogoParser.LogiqueEtContext ctx) {
+		visitChildren(ctx);
+		int rightBool = (int) getAttValue(ctx.expbool(0));
+		int leftBool = (int) getAttValue(ctx.expbool(1));
+		setAttValue(ctx, (rightBool==1 && leftBool==1)? 1 : 0);
+		Log.append("visitLogiqueEt\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitLogiqueOu(LogoParser.LogiqueOuContext ctx) {
+		visitChildren(ctx);
+		int rightBool = (int) getAttValue(ctx.expbool(0));
+		int leftBool = (int) getAttValue(ctx.expbool(1));
+		setAttValue(ctx, (rightBool==1 || leftBool==1)? 1 : 0);
+		Log.append("visitLogiqueOu\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitLogiqueParent(LogoParser.LogiqueParentContext ctx) {
+		visit(ctx.getChild(1));
+		setAttValue(ctx, getAttValue(ctx.expbool()));
+		Log.append("visitLogiqueParent\n" );
 		return 0;
 	}
 }

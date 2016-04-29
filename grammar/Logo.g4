@@ -5,6 +5,7 @@ grammar Logo;
 }
 
 INT : '0' | [1-9][0-9]* ;
+ID : [A-Za-z][A-Za-z0-9]* ;
 SIGN : ('-'|'+') ;
 WS : [ \t\r\n]+ -> skip ;
 exp : exp ('*'|'/') exp #mult
@@ -17,12 +18,21 @@ atom : INT              #int
      | 'hasard' exp     #hasard
      | 'loop'           #loop
      | ('-'|'+') INT    #sigInt
+     | ':'ID            #variable
      ;
-     /*
-     Avec hasard placé en dessous de mult et sum, il a une priorité inférieure à ces derniers, donc :
-        av hasard 200 + 100 = av hasard 300 car l'expression de la somme est évaluée en premier
-        av 200 + hasard 100 -> dans tous les cas, l'expression 200 + hasard 100 est évaluée avant av (on récupère le resultat de hasard 100 que l'on somme avec 200)
-     */
+
+expbool : expbool '&' expbool                            #logiqueEt
+        | expbool '|' expbool                            #logiqueOu
+        | '(' expbool ')'                                #logiqueParent
+        | exp ('<' | '>' | '<='| '>=' | '!=' | '==') exp #boolOperation
+        ;
+
+/*
+ Avec hasard placé en dessous de mult et sum, il a une priorité inférieure à ces derniers, donc :
+    av hasard 200 + 100 = av hasard 300 car l'expression de la somme est évaluée en premier
+    av 200 + hasard 100 -> dans tous les cas, l'expression 200 + hasard 100 est évaluée avant av (on récupère le resultat de hasard 100 que l'on somme avec 200)
+ */
+
 
 programme : liste_instructions 
 ;
@@ -40,5 +50,8 @@ instruction :
   | 've' # ve
   | 'fcc' exp # fcc
   | 'repete' exp '[' liste_instructions ']' #repete
-;  
+  | 'donne' '"'ID exp #donne
+  | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
+  | 'tantque' expbool '[' liste_instructions ']' #tantque
+;
    

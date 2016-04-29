@@ -70,6 +70,41 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSigInt(LogoParser.SigIntContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code variable}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(LogoParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logiqueParent}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogiqueParent(LogoParser.LogiqueParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logiqueEt}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogiqueEt(LogoParser.LogiqueEtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolOperation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolOperation(LogoParser.BoolOperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logiqueOu}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogiqueOu(LogoParser.LogiqueOuContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LogoParser#programme}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -151,4 +186,25 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRepete(LogoParser.RepeteContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code donne}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDonne(LogoParser.DonneContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code si}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSi(LogoParser.SiContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code tantque}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTantque(LogoParser.TantqueContext ctx);
 }
