@@ -151,6 +151,18 @@ public class LogoBaseListener implements LogoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLogiqueNegation(LogoParser.LogiqueNegationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogiqueNegation(LogoParser.LogiqueNegationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBoolOperation(LogoParser.BoolOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}

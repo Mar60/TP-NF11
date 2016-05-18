@@ -312,4 +312,13 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		Log.append("visitLogiqueParent\n" );
 		return 0;
 	}
+	
+	@Override
+	public Integer visitLogiqueNegation(LogoParser.LogiqueNegationContext ctx) {
+		visit(ctx.getChild(1));
+		int bool = (int) getAttValue(ctx.expbool());
+		setAttValue(ctx, bool==1 ? 0 : 1);
+		Log.append("visitLogiqueNegation\n" );
+		return 0;
+	}
 }

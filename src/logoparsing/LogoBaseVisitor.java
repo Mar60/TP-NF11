@@ -97,6 +97,13 @@ public class LogoBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements L
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitLogiqueNegation(LogoParser.LogiqueNegationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitBoolOperation(LogoParser.BoolOperationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

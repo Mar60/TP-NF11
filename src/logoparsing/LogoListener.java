@@ -143,6 +143,18 @@ public interface LogoListener extends ParseTreeListener {
 	 */
 	void exitLogiqueEt(LogoParser.LogiqueEtContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code logiqueNegation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogiqueNegation(LogoParser.LogiqueNegationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logiqueNegation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogiqueNegation(LogoParser.LogiqueNegationContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code boolOperation}
 	 * labeled alternative in {@link LogoParser#expbool}.
 	 * @param ctx the parse tree

@@ -25,6 +25,7 @@ expbool : expbool '&' expbool                            #logiqueEt
         | expbool '|' expbool                            #logiqueOu
         | '(' expbool ')'                                #logiqueParent
         | exp ('<' | '>' | '<='| '>=' | '!=' | '==') exp #boolOperation
+        | '!'expbool									 #logiqueNegation
         ;
 
 /*

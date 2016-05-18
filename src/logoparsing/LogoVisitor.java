@@ -91,6 +91,13 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLogiqueEt(LogoParser.LogiqueEtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code logiqueNegation}
+	 * labeled alternative in {@link LogoParser#expbool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogiqueNegation(LogoParser.LogiqueNegationContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code boolOperation}
 	 * labeled alternative in {@link LogoParser#expbool}.
 	 * @param ctx the parse tree
