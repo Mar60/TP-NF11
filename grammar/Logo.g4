@@ -21,11 +21,11 @@ atom : INT              #int
      | ':'ID            #variable
      ;
 
-expbool : expbool '&' expbool                            #logiqueEt
+expbool : '!'expbool									 #logiqueNegation
+        | expbool '&' expbool                            #logiqueEt
         | expbool '|' expbool                            #logiqueOu
         | '(' expbool ')'                                #logiqueParent
         | exp ('<' | '>' | '<='| '>=' | '!=' | '==') exp #boolOperation
-        | '!'expbool									 #logiqueNegation
         ;
 
 /*
@@ -35,11 +35,20 @@ expbool : expbool '&' expbool                            #logiqueEt
  */
 
 
-programme : liste_instructions 
+programme : methodes? liste_instructions
+;
+
+methodes :
+  (pour)+
+;
+
+pour :
+  'pour' ID (':'ID)* liste_instructions 'fin'
 ;
 liste_instructions :
   (instruction)+   
 ;
+
 instruction :
     'av' exp # av
   | 'td' exp # td
@@ -54,5 +63,6 @@ instruction :
   | 'donne' '"'ID exp #donne
   | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
   | 'tantque' expbool '[' liste_instructions ']' #tantque
+  | ID (exp)* #appelPour
 ;
    

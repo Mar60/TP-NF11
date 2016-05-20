@@ -9,7 +9,6 @@ import java.util.Map;
 public class VariableMap {
     private Map<String,Double> variableMap;
 
-
     public VariableMap() {
         this.variableMap = new HashMap<>();
     }

@@ -18,6 +18,8 @@ import logoparsing.LogoParser.BcContext;
 import logoparsing.LogoParser.VeContext;
 import logoparsing.LogoParser.FccContext;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
@@ -25,14 +27,16 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	Traceur traceur;
 	ParseTreeProperty<Double> atts = new ParseTreeProperty<Double>();
 	Stack<Double> pileRepete = new Stack<>();
-	VariableMap variableMap = new VariableMap();
+	Stack<VariableMap> pileTableVariable = new Stack<>();
+	private Map<String,Procedure> procedureMap = new HashMap<>();
 
 	public LogoTreeVisitor() {
 		super();
 	}
 	public void initialize(Group g) {
-	      traceur = new Traceur();
-	      traceur.setGraphics(g);
+		traceur = new Traceur();
+	  	traceur.setGraphics(g);
+		pileTableVariable.push(new VariableMap());//for the main program
     }
 
 	public void setAttValue(ParseTree node, double value) {
@@ -204,6 +208,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		visitChildren(ctx);
 		String variableId = ctx.ID().toString();
 		Double value = getAttValue(ctx.exp());
+		VariableMap variableMap = pileTableVariable.peek();
 		variableMap.createVariable(variableId,value);
 		Log.append("visitDonne "+variableId +" : "+value+"\n" );
 		return 0;
@@ -213,6 +218,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 	public Integer visitVariable(LogoParser.VariableContext ctx) {
 		visitChildren(ctx);
 		String variableId = ctx.ID().toString();
+		VariableMap variableMap = pileTableVariable.peek();
 		setAttValue(ctx,variableMap.getElement(variableId));
 		Log.append("visitVariable\n" );
 		return 0;
@@ -319,6 +325,44 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		int bool = (int) getAttValue(ctx.expbool());
 		setAttValue(ctx, bool==1 ? 0 : 1);
 		Log.append("visitLogiqueNegation\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitPour(LogoParser.PourContext ctx) {
+		visit(ctx.ID(0));
+		String name = ctx.ID(0).toString();
+		Procedure procedure = new Procedure();
+		for (int i = 1; i < ctx.ID().size(); i ++){
+			visit(ctx.ID(i));
+			procedure.addParameter(ctx.ID(i).toString());
+		}
+		procedure.setListeInstructions(ctx.liste_instructions());
+		procedureMap.put(name,procedure);
+		Log.append("visitPour\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitAppelPour(LogoParser.AppelPourContext ctx) {
+		VariableMap ourVariableMap = new VariableMap();
+		visit(ctx.ID());
+		String name = ctx.ID().toString();
+		Procedure procedure = procedureMap.get(name);
+		double paramValue;
+		visitChildren(ctx);
+		if(ctx.exp().size()==procedure.listParametres.size()){
+			for(int i = 0; i< procedure.listParametres.size(); i++){
+				paramValue = getAttValue(ctx.exp(i));
+				ourVariableMap.createVariable(procedure.listParametres.get(i),paramValue);
+			}
+			pileTableVariable.push(ourVariableMap);
+			visit(procedure.listeInstructions);
+			pileTableVariable.pop();
+		} else
+			Log.append("visitAppelPour: Error number of parameter incorrect\n" );
+
+		Log.append("visitAppelPour\n" );
 		return 0;
 	}
 }

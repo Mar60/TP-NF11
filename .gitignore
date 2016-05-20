@@ -19,3 +19,14 @@ out/
 .settings/
 .classpath
 .project
+
+
+##LaTeX
+livrables/*.aux
+livrables/*.out
+livrables/*.synctex.gz
+livrables/*.toc
+livrables/*.log
+livrables/*.nav
+livrables/*.snm
+livrables/*~

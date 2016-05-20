@@ -1,0 +1,278 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[francais]{babel}
+
+% title info
+\newcommand{\ititle}{Cahier des Charges NF28} % title
+\newcommand{\isubtitle}{Projet Colladia\\(Collaborative Diagrams)}
+\newcommand{\iauthor}{\textsc{Impellettieri} Florian\\\textsc{Vintache} Jean\\\textsc{Hammi} Marouane\\\textsc{Menier} Charles} % author
+\newcommand{\idate}{\today} % date
+
+\input{src/config}
+\input{src/source_code}
+
+\begin{document}
+\input{src/titlepage}
+
+\newpage
+\section{Introduction}
+
+\subsection{Contexte}
+Ce document constitue le cahier des charges du projet de NF28. Au cours de ce projet l'objectif sera de proposer à des utilisateurs une expérience d'interaction agréable. Ceci à travers une interface graphique ergonomique adaptée aux besoins utilisateurs.
+
+\subsection{Équipe}
+Notre groupe est composé de 5 étudiants :
+\begin{itemize}
+\item \textsc{Impellettieri} Florian (NF28/IA04)
+\item \textsc{Vintache} Jean (NF28/IA04)
+\item \textsc{Jacquet} Adrien (IA04)
+\item \textsc{Hammi} Marouane (NF28/IA04)
+\item \textsc{Menier} Charles (NF28)
+\end{itemize}
+
+
+
+\section{Description}
+Le but du projet sera de créer un logiciel de tableau blanc collaboratif, qui permettrait de générer diverses formes, pour réaliser des diagrammes ou des schémas.
+Le projet sera couplé avec celui d'IA04, ce qui nécessitera de mettre en place des agents. Il se destine aux appareils mobiles (smartphones et tablettes). Une attention sera donc portée à la facilité d'utilisation sur des écrans relativement petits et tactiles.
+
+
+
+\section{Intérêt principal}
+On dit qu'un dessin vaut mieux qu'un long discours. Partant de ce principe, l'objectif de Colladia serait de proposer aux utilisateurs une expérience leur permettant de pouvoir dessiner, ensemble, chacun sur leur propre appareil mobile. 
+
+Les utilisateurs peuvent ainsi modifier le document simultanément, et profiter des interactions tactiles qu'offre ces supports.
+Que ce soit en déplacement ou en réunion, il n'est pas toujours possible d'avoir un ordinateur avec soi. Dans ce genre de situation Colladia se révèle particulièrement intéressant.
+ 
+
+\section{Utilisateurs visés}
+Les premiers utilisateurs visées seront notamment les étudiants et des professionnels qui rencontrent la nécessité de réaliser des diagrammes ou des schémas dans leur quotidien.
+L'application sera axé sur ces utilisateurs pour proposer des éléments de diagramme adaptés à leur besoins.
+
+
+
+
+
+
+\section{Étude des utilisateurs (interviews, enquêtes)}
+
+Afin de déterminer les besoins des utilisateurs de façon pertinentes un sondage a été réalisé auprès des étudiants de l’UTC venant de diverses branches. Les questions étaient relatives aux types d'outils avec lesquelles ils sont habituées à réaliser des schémas. 
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/sondage_branche}
+	\caption{Sondage - Répartition par branches}
+\end{figure}
+
+On observe que les avis sur les outils déjà existants sont assez mitigés. En effet, les inconvénients les plus cités sont le manque de personnalisation et la gratuité. D'un autres côté, les avantages cités sont la gratuité et la simplicité d'utilisation. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{img/sondage_outils}
+	\caption{Sondage - Outils utilisés pour schéma et diagrammes}
+\end{figure}
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{img/sondage_critique}
+	\caption{Sondage - Critiques des outils existants}
+\end{figure}
+\vspace{200pt}
+  
+
+On peut également voir que les avis quant à l'utilisation d'un appareil mobile pour travailler sont très partagés, on se retrouve à 50\% pour et 50\% contre.
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/sondage_smartphone}
+	\caption{Sondage - Critiques des outils existants}
+\end{figure}
+
+\vspace{200pt}
+
+Enfin, l'idée d'une application permettant le travail collaboratif sur appareil mobile est aussi partagé mais tend à pencher pour un avis positif.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/sondage_colladia}
+	\caption{Sondage - Avis sur Colladia}
+\end{figure}
+
+
+\newpage
+\section{Étude de quelques logiciels concurrents}
+Lors de nos recherches, deux application semblaient réellement en concurrence avec notre solution. À savoir draw.io de Google et DrawExpress de DrawExpress Inc.
+
+
+
+\subsection{Draw.io}
+Néanmoins draw.io, bien que collaboratif n'utilise pas pleinement les fonctionnalités tactiles des supports mobiles.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{img/drawio}
+	\caption{draw.io - Édition en collaboration}
+\end{figure}
+
+
+
+
+\subsection{DrawExpress}
+Ce que fait DrawExpress c'est de proposer une éditeur de diagramme sur mobile. Il est cross-plateforme (IOS, Android et BlackBerry) mais il ne permet pas le travail simultané à plusieurs.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/DrawExpressRecognition}
+	\caption{Aperçu des interactions tactiles de DrawExpress - \\Reconnaissance de forme}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/DrawExpressLinks}
+	\caption{Aperçu des interactions tactiles de DrawExpress - Tracé de lignes}
+\end{figure}
+
+Cette application constitue une bonne base d'inspiration pour Colladia puisqu'elle est utilise particulièrement les interactions tactiles permises par les smartphones afin de créer, à partir de gestes simples à main levée, des formes prédéfinies qui constituent le diagramme construit. De cette manière, l'ergonomie est optimisée pour les écrans tactiles et de petite taille.
+
+
+
+
+
+\subsection{Positionnement}
+Le but de Colladia est donc de proposer les deux points forts ces deux logiciels concurrents, à savoir le travail collaboratif et les interactions tactiles.
+
+
+
+
+\section{Fonctionnalités}
+
+\subsection{Fonctionnalités générales}
+	\begin{itemize}
+		\item Connexion au serveur avec pseudo
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=5cm]{img/accueil}
+			\caption{Maquette Colladia - Connexion}
+		\end{figure}
+		
+		\item Création d'un nouveau diagramme
+		\item Rejoindre un diagramme parmi une liste de diagrammes existants
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=5cm]{img/workspace-selection}
+			\caption{Maquette Colladia - Workspace}
+		\end{figure}
+		
+		\item Déplacement de la vue sur le diagramme
+		\item Ajout, Suppression et Modification d'éléments
+	\end{itemize}
+	
+	
+\subsection{Fonctionnalités tactiles}
+\begin{itemize}
+\item Icône transparent dans le coin pour ouvrir le menu
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=10cm]{img/menu}
+			\caption{Maquette Colladia - Menu}
+		\end{figure}
+\item Ajout de formes prédéfinies (Classes UML, cercles, carrés, rectangles,...)
+\item Liste des utilisateurs présent sur un même diagramme :
+\begin{itemize}
+	\item Possibilité de suivre un utilisateur
+	\item Affichage de la vue d'un utilisateur
+\end{itemize}
+
+\item Un appui long sur un élément permet d'ouvrir un menu contextuel spécifique à l'élément :
+\begin{itemize}
+	\item Mettre au premier ou au dernier plan l'élément
+	\item Attirer l'attention des autres utilisateurs (à l'aide d'une flèche)
+	\item Permettre : la modification ou la suppression de l'élément
+\end{itemize}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=10cm]{img/modification}
+			\caption{Maquette Colladia - Modification d'éléments}
+		\end{figure}
+		
+		
+\item Un appui long dans le vide permet d'ajouter des éléments
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=10cm]{img/diagram-creation}
+			\caption{Maquette Colladia - Création d'éléments}
+		\end{figure}
+\item Un “double-tap” à 2 doigts permet de  passer du mode dessin au déplacement (et inversement)
+\item Un mouvement de slide permet de se déplacer sur la zone de dessin
+
+\begin{itemize}
+	\item si un élément est sélectionné alors on déplace ce dernier
+\end{itemize}
+
+\item Un appui sur un élément le sélectionne
+\begin{itemize}
+	\item en appuyant de nouveau sur un élément sélectionné ou sur un espace vide, on dé-sélectionne l'élément
+\end{itemize}
+
+\item Le mouvement de pinch habituel pour gérer les effets de zoom
+\begin{itemize}
+	\item si élément est sélectionné, ce mouvement peut aussi servir de redimensionnement 
+\end{itemize}
+
+\end{itemize}
+
+
+\subsection{Fonctionnalités optionnelles}
+Compte tenu des contraintes de temps imposé par le projet, il ne nous est pas possible d'entreprendre les différentes idées que nous avons eu pour améliorer l'expérience utilisateur.
+
+Néanmoins, voici certaines améliorations que nous essayerions d'apporter à l'application dans la mesure du possible.
+
+\begin{itemize}
+\item un chat pour laisser la possibilité aux membres de communiquer
+\item l'utilisation de commandes vocales pour faciliter l'utilisation de l'application
+\item un système de commentaire sur les diagrammes, pour fournir des informations complémentaires
+\item une fonction de recherche de texte
+\item la fusion de diagramme
+\item l'exportation des diagrammes sous différents formats
+\item la gestion des utilisateurs et des droits
+\item la gestion des sauvegardes (automatique côté serveur)
+\item le dessin à main levé qui permet une reconnaissance de forme et d'ajout d'élément automatiquement
+
+\end{itemize}
+
+
+
+
+
+
+\section{Technologies}
+Afin de proposer une application collaborative, la décision de réaliser une application client serveur a rapidement été prise.
+
+\subsection{Côté serveur}
+Le projet étant couplé avec celui de IA04, il faudra mettre en place un serveur sur lequel tournera une plateforme multi-agent, à savoir JADE. 
+Une API REST sera mise en place pour communiquer avec les différents clients.
+
+\subsection{Côté client}
+L'utilisateur aura accès à l'application sur une tablette ou un smartphone.  
+Le développement sur ces terminaux peut être réalisé de différentes manières.
+\begin{itemize}
+\item en natif : il aurait alors fallu développer en code natif directement. Ce type de développement oblige un travail de développement important pour le proposer sur diffèrent systèmes d'exploitation (iOS, Android,...). Cependant l'application réalisé est plus performante.
+\item en utilisant xamarin : ce mode de développement permet de générer du code natif dans les diverses plateformes existantes que ce soit iOS, Android ou WindowsPhone. 
+\item en utilisant cordova : le code obtenu donne l'aspect d'une application, mais il s'agit en réalité d'une webview. L'application peut aussi se révéler moins performante qu'une application native.
+
+\end{itemize}
+
+Après concertation il a été décidé de réaliser l'application cliente avec Xamarin.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/Archi}
+	\caption{Schéma de l'architecture de Colladia : Client/Serveur}
+\end{figure}
+
+% Commentaires
+\end{document}
