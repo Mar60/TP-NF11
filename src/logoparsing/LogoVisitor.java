@@ -21,6 +21,13 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArule(LogoParser.AruleContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code appelFonction}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAppelFonction(LogoParser.AppelFonctionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code mult}
 	 * labeled alternative in {@link LogoParser#exp}.
 	 * @param ctx the parse tree
@@ -233,4 +240,11 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAppelPour(LogoParser.AppelPourContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code rends}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRends(LogoParser.RendsContext ctx);
 }

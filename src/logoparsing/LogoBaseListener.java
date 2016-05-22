@@ -31,6 +31,18 @@ public class LogoBaseListener implements LogoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAppelFonction(LogoParser.AppelFonctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAppelFonction(LogoParser.AppelFonctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMult(LogoParser.MultContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -398,6 +410,18 @@ public class LogoBaseListener implements LogoListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAppelPour(LogoParser.AppelPourContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRends(LogoParser.RendsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRends(LogoParser.RendsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

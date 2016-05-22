@@ -328,6 +328,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 		return 0;
 	}
 
+
 	@Override
 	public Integer visitPour(LogoParser.PourContext ctx) {
 		visit(ctx.ID(0));
@@ -363,6 +364,42 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 			Log.append("visitAppelPour: Error number of parameter incorrect\n" );
 
 		Log.append("visitAppelPour\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitRends(LogoParser.RendsContext ctx) {
+		visit(ctx.exp());
+		double resultValue = getAttValue(ctx.exp());
+		Log.append("visitRends result: "+resultValue+"\n" );
+		setAttValue(ctx, resultValue);
+		Log.append("visitRends\n" );
+		return 0;
+	}
+
+	@Override
+	public Integer visitAppelFonction(LogoParser.AppelFonctionContext ctx) {
+		VariableMap ourVariableMap = new VariableMap();
+		visit(ctx.ID());
+		String name = ctx.ID().toString();
+		Procedure procedure = procedureMap.get(name);
+		double paramValue;
+		visitChildren(ctx);
+		if(ctx.exp().size()==procedure.listParametres.size()){
+			for(int i = 0; i< procedure.listParametres.size(); i++){
+				paramValue = getAttValue(ctx.exp(i));
+				ourVariableMap.createVariable(procedure.listParametres.get(i),paramValue);
+			}
+			pileTableVariable.push(ourVariableMap);
+			visit(procedure.listeInstructions);
+			double result = getAttValue(procedure.listeInstructions.instruction(procedure.listeInstructions.getChildCount()-1));
+			Log.append("result: "+result+"\n" );
+			setAttValue(ctx,result);
+			pileTableVariable.pop();
+		} else
+			Log.append("visitAppelFonction: Error number of parameter incorrect\n" );
+
+		Log.append("visitAppelFonction\n" );
 		return 0;
 	}
 }

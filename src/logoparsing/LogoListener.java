@@ -23,6 +23,18 @@ public interface LogoListener extends ParseTreeListener {
 	 */
 	void exitArule(LogoParser.AruleContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code appelFonction}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAppelFonction(LogoParser.AppelFonctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code appelFonction}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAppelFonction(LogoParser.AppelFonctionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code mult}
 	 * labeled alternative in {@link LogoParser#exp}.
 	 * @param ctx the parse tree
@@ -386,4 +398,16 @@ public interface LogoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAppelPour(LogoParser.AppelPourContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code rends}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterRends(LogoParser.RendsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code rends}
+	 * labeled alternative in {@link LogoParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitRends(LogoParser.RendsContext ctx);
 }
