@@ -339,6 +339,7 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 			procedure.addParameter(ctx.ID(i).toString());
 		}
 		procedure.setListeInstructions(ctx.liste_instructions());
+		procedure.setNoeudRends(ctx.rends());
 		procedureMap.put(name,procedure);
 		Log.append("visitPour\n" );
 		return 0;
@@ -391,8 +392,12 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 				ourVariableMap.createVariable(procedure.listParametres.get(i),paramValue);
 			}
 			pileTableVariable.push(ourVariableMap);
-			visit(procedure.listeInstructions);
-			double result = getAttValue(procedure.listeInstructions.instruction(procedure.listeInstructions.getChildCount()-1));
+			if(procedure.listeInstructions!=null){
+				visit(procedure.listeInstructions);
+			}
+			visit(procedure.getNoeudRends());
+			double result = getAttValue(procedure.getNoeudRends());
+			//double result = getAttValue(procedure.listeInstructions.instruction(procedure.listeInstructions.getChildCount()-1));
 			Log.append("result: "+result+"\n" );
 			setAttValue(ctx,result);
 			pileTableVariable.pop();

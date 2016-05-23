@@ -44,8 +44,12 @@ methodes :
 ;
 
 pour :
-  'pour' ID (':'ID)* liste_instructions 'fin'
+  'pour' ID (':'ID)* (liste_instructions)? (rends)? 'fin'
 ;
+rends :
+ 'rends' exp
+;
+
 liste_instructions :
   (instruction)+   
 ;
@@ -65,7 +69,6 @@ instruction :
   | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
   | 'tantque' expbool '[' liste_instructions ']' #tantque
   | ID (exp)* #appelPour
-  | 'rends' exp      #rends
 
 ;
    
