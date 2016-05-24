@@ -10,7 +10,7 @@ SIGN : ('-'|'+') ;
 WS : [ \t\r\n]+ -> skip ;
 exp : exp ('*'|'/') exp #mult
     | exp ('+'|'-') exp #sum
-    | ID (exp)*         #appelFonction
+    | ID '('(exp)*')'   #appelFonction
     | atom              #arule
     ;
 
@@ -68,7 +68,7 @@ instruction :
   | 'donne' '"'ID exp #donne
   | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
   | 'tantque' expbool '[' liste_instructions ']' #tantque
-  | ID (exp)* #appelPour
+  | ID '('(exp)*')' #appelPour
 
 ;
    
