@@ -5,9 +5,9 @@
 \usepackage[francais]{babel}
 
 % title info
-\newcommand{\ititle}{Cahier des Charges NF28} % title
-\newcommand{\isubtitle}{Projet Colladia\\(Collaborative Diagrams)}
-\newcommand{\iauthor}{\textsc{Impellettieri} Florian\\\textsc{Vintache} Jean\\\textsc{Hammi} Marouane\\\textsc{Menier} Charles} % author
+\newcommand{\ititle}{Rapport NF11} % title
+\newcommand{\isubtitle}{Projet LOGO}
+\newcommand{\iauthor}{\textsc{Impellettieri} Florian\\\textsc{Hammi} Marouane}% author
 \newcommand{\idate}{\today} % date
 
 \input{src/config}
@@ -20,259 +20,171 @@
 \section{Introduction}
 
 \subsection{Contexte}
-Ce document constitue le cahier des charges du projet de NF28. Au cours de ce projet l'objectif sera de proposer à des utilisateurs une expérience d'interaction agréable. Ceci à travers une interface graphique ergonomique adaptée aux besoins utilisateurs.
+Ce document constitue le rapport du projet de NF11. Au cours de ce projet l'objectif a été de réaliser une grammaire dans le langage LOGO.
 
-\subsection{Équipe}
-Notre groupe est composé de 5 étudiants :
+\section{Grammaire}
+Ci-dessous figure la grammaire de notre projet, suivie d'une description synthétique des différents éléments la composant.
+
+\begin{lstlisting}[language=LOGO]
+grammar Logo; 
+
+@header {
+  package logoparsing;
+}
+
+INT : '0' | [1-9][0-9]* ;
+ID : [A-Za-z][A-Za-z0-9]* ;
+SIGN : ('-'|'+') ;
+WS : [ \t\r\n]+ -> skip ;
+exp : exp ('*'|'/') exp #mult
+    | exp ('+'|'-') exp #sum
+    | ID '('(exp)*')'   #appelFonction
+    | atom              #arule
+    ;
+
+atom : INT              #int
+     | '(' exp ')'      #parent
+     | 'hasard' exp     #hasard
+     | 'loop'           #loop
+     | ('-'|'+') INT    #sigInt
+     | ':'ID            #variable
+     ;
+
+expbool : '!'expbool									 #logiqueNegation
+        | expbool '&' expbool                            #logiqueEt
+        | expbool '|' expbool                            #logiqueOu
+        | '(' expbool ')'                                #logiqueParent
+        | exp ('<' | '>' | '<='| '>=' | '!=' | '==') exp #boolOperation
+        ;
+
+
+programme : methodes? liste_instructions
+;
+
+methodes :
+  (pour)+
+;
+
+pour :
+  'pour' ID (':'ID)* (liste_instructions)? (rends)? 'fin'
+;
+rends :
+ 'rends' exp
+;
+
+liste_instructions :
+  (instruction)+   
+;
+
+instruction :
+    'av' exp # av
+  | 'td' exp # td
+  | 'tg' exp # tg
+  | 're' exp # re
+  | 'fpos' '[' atom  atom ']' # fpos
+  | 'lc' # lc
+  | 'bc' # bc
+  | 've' # ve
+  | 'fcc' exp # fcc
+  | 'repete' exp '[' liste_instructions ']' #repete
+  | 'donne' '"'ID exp #donne
+  | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
+  | 'tantque' expbool '[' liste_instructions ']' #tantque
+  | ID '('(exp)*')' #appelPour
+
+;
+   \end{lstlisting}
+
+Cette grammaire constitue la base du projet.
+
+\subsection{Descriptions expression}
+Les expressions sont constitué des différentes opérations et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
+Il existe aussi les expressions booléenne qui renvoient false ou true (0 ou 1).
+Que se soit les expressions booléennes ou les expressions arithmétique, l'ordre est étudié pour prendre en compte la priorité des opérateurs. Par exemple l'opérateur de multiplication est prioritaire par rapport à celui d'addition.
+
+\subsection{Descriptions instructions}
+Les instructions correspondent aux directives sont appelées dans le programme. Elles permettent d'effectuer des actions comme par exemple d'avancer de 100 (av 100).
+
+Il existe différents types d'instructions :
 \begin{itemize}
-\item \textsc{Impellettieri} Florian (NF28/IA04)
-\item \textsc{Vintache} Jean (NF28/IA04)
-\item \textsc{Jacquet} Adrien (IA04)
-\item \textsc{Hammi} Marouane (NF28/IA04)
-\item \textsc{Menier} Charles (NF28)
+	\item celles permettant d'agir sur le traceur (av, re, lc, fpos,...)
+	\item les boucles : 'repete' et 'tantque'
+	\item l'instruction 'donne' qui permet d'affecter à une variable une valeur
+	\item l'instruction de condition 'si', qui donne la possibilité de tester une expression booléenne et d'agir en conséquence
+	\item l'instruction qui permet de réaliser l'appel d'une procédure, qui a été défini
 \end{itemize}
 
+\subsection{Descriptions méthodes}
+Il est possible de définir une ou plusieurs méthodes que se soit des fonctions ou des procédures. La définition des méthodes doit être faite avant le programme principal.
 
+Les fonctions doivent renvoyer une valeur, pour ce faire elles doivent utiliser le mot-clef 'rends' qui correspond au terme return dans la plupart des langages, excepté qu'il doit être utilisé juste avant le mot-clef 'fin'.
+Puisqu'une fonction doit renvoyer une valeur, on considère que l'appel de la fonction est une expression.
+L'appel d'une procédure est traitée comme une instruction normale.
 
-\section{Description}
-Le but du projet sera de créer un logiciel de tableau blanc collaboratif, qui permettrait de générer diverses formes, pour réaliser des diagrammes ou des schémas.
-Le projet sera couplé avec celui d'IA04, ce qui nécessitera de mettre en place des agents. Il se destine aux appareils mobiles (smartphones et tablettes). Une attention sera donc portée à la facilité d'utilisation sur des écrans relativement petits et tactiles.
-
-
-
-\section{Intérêt principal}
-On dit qu'un dessin vaut mieux qu'un long discours. Partant de ce principe, l'objectif de Colladia serait de proposer aux utilisateurs une expérience leur permettant de pouvoir dessiner, ensemble, chacun sur leur propre appareil mobile. 
-
-Les utilisateurs peuvent ainsi modifier le document simultanément, et profiter des interactions tactiles qu'offre ces supports.
-Que ce soit en déplacement ou en réunion, il n'est pas toujours possible d'avoir un ordinateur avec soi. Dans ce genre de situation Colladia se révèle particulièrement intéressant.
- 
-
-\section{Utilisateurs visés}
-Les premiers utilisateurs visées seront notamment les étudiants et des professionnels qui rencontrent la nécessité de réaliser des diagrammes ou des schémas dans leur quotidien.
-L'application sera axé sur ces utilisateurs pour proposer des éléments de diagramme adaptés à leur besoins.
+Il est possible de passer aux méthodes plusieurs paramètres. Pour éviter toute ambiguïté il est nécessaire de passer les paramètres de la méthodes entre parenthèses.  
 
 
 
 
+\section{Structure de données}
+Concernant les structures de données principales du projet, on peut référencer la Pile de Table des variables, la Pile Répète et la Table des Procédures.
+
+\subsection{Pile de Table des Variables}
+Une Table des variables est composée d'une map avec comme clef l'identifiant de la variable associé à la valeur Double de la variable. Ainsi lorsque l'identifiant de la variable est appelé dans le programme il est possible de retrouver sa valeur efficacement.
+
+Initialement, il n'existait qu'une seule table des variables. Cependant lorsque les procédures et fonctions ont été mises en place il fallait trouver un moyen de gérer la portée des variables.
+Le choix a donc été réalisé de limiter la portée des variables dans le programme principal et dans les méthodes. 
+
+Ainsi, il existe une pile contenant initialement la Table du programme principal. Dès qu'une procédure ou une fonction est appelée une nouvelle Table est ajoutée dans la pile.
+Lorsque l'on recherche la valeur d'une variable donnée, il faut observer uniquement la Table se situant sur le dessus de la pile. Ce qui permet de s'assurer qu'une variable ne sera pas utilisée en dehors de sa portée définie.
+
+Lorsque le traitement de la fonction ou de la procédure est finie, il faut retirer la Table de la pile pour revenir au contexte précédent.
 
 
-\section{Étude des utilisateurs (interviews, enquêtes)}
+\subsection{Pile Répète}
+Cette pile permet de conserver le nombre d'itérations qui ont été effectué. Ce qui permet de récupérer cette valeur avec l'expression 'loop'. Quand bien même des instructions 'répète' seraient imbriquées.
 
-Afin de déterminer les besoins des utilisateurs de façon pertinentes un sondage a été réalisé auprès des étudiants de l’UTC venant de diverses branches. Les questions étaient relatives aux types d'outils avec lesquelles ils sont habituées à réaliser des schémas. 
+À chaque itération de la boucle, l'index d'itération est ajouté en haut de la pile, puis les instructions sont exécutés. Lorsque les instructions sont finis la valeur en haut de la pile est retirée, puis si la boucle n'est pas finie il faut recommencer. 
 
+\subsection{Table des Procédures}
+Les procédures (et fonctions) posent un nouveau problème, puisque leurs définitions sont réalisées avant le programme principal, mais elles ne sont exécutées que lors de l'appel de ces derniers.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{img/sondage_branche}
-	\caption{Sondage - Répartition par branches}
-\end{figure}
+La solution adoptée, est de stocker dans une Map l'identifiant de la procédure comme clef. La valeur associé dans la Map correspond à la classe Procédure.
 
-On observe que les avis sur les outils déjà existants sont assez mitigés. En effet, les inconvénients les plus cités sont le manque de personnalisation et la gratuité. D'un autres côté, les avantages cités sont la gratuité et la simplicité d'utilisation. 
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=\textwidth]{img/sondage_outils}
-	\caption{Sondage - Outils utilisés pour schéma et diagrammes}
-\end{figure}
-
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=\textwidth]{img/sondage_critique}
-	\caption{Sondage - Critiques des outils existants}
-\end{figure}
-\vspace{200pt}
-  
-
-On peut également voir que les avis quant à l'utilisation d'un appareil mobile pour travailler sont très partagés, on se retrouve à 50\% pour et 50\% contre.
-
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{img/sondage_smartphone}
-	\caption{Sondage - Critiques des outils existants}
-\end{figure}
-
-\vspace{200pt}
-
-Enfin, l'idée d'une application permettant le travail collaboratif sur appareil mobile est aussi partagé mais tend à pencher pour un avis positif.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{img/sondage_colladia}
-	\caption{Sondage - Avis sur Colladia}
-\end{figure}
-
-
-\newpage
-\section{Étude de quelques logiciels concurrents}
-Lors de nos recherches, deux application semblaient réellement en concurrence avec notre solution. À savoir draw.io de Google et DrawExpress de DrawExpress Inc.
-
-
-
-\subsection{Draw.io}
-Néanmoins draw.io, bien que collaboratif n'utilise pas pleinement les fonctionnalités tactiles des supports mobiles.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{img/drawio}
-	\caption{draw.io - Édition en collaboration}
-\end{figure}
-
-
-
-
-\subsection{DrawExpress}
-Ce que fait DrawExpress c'est de proposer une éditeur de diagramme sur mobile. Il est cross-plateforme (IOS, Android et BlackBerry) mais il ne permet pas le travail simultané à plusieurs.
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=.6\textwidth]{img/DrawExpressRecognition}
-	\caption{Aperçu des interactions tactiles de DrawExpress - \\Reconnaissance de forme}
-\end{figure}
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=.6\textwidth]{img/DrawExpressLinks}
-	\caption{Aperçu des interactions tactiles de DrawExpress - Tracé de lignes}
-\end{figure}
-
-Cette application constitue une bonne base d'inspiration pour Colladia puisqu'elle est utilise particulièrement les interactions tactiles permises par les smartphones afin de créer, à partir de gestes simples à main levée, des formes prédéfinies qui constituent le diagramme construit. De cette manière, l'ergonomie est optimisée pour les écrans tactiles et de petite taille.
-
-
-
-
-
-\subsection{Positionnement}
-Le but de Colladia est donc de proposer les deux points forts ces deux logiciels concurrents, à savoir le travail collaboratif et les interactions tactiles.
-
-
-
-
-\section{Fonctionnalités}
-
-\subsection{Fonctionnalités générales}
-	\begin{itemize}
-		\item Connexion au serveur avec pseudo
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=5cm]{img/accueil}
-			\caption{Maquette Colladia - Connexion}
-		\end{figure}
-		
-		\item Création d'un nouveau diagramme
-		\item Rejoindre un diagramme parmi une liste de diagrammes existants
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=5cm]{img/workspace-selection}
-			\caption{Maquette Colladia - Workspace}
-		\end{figure}
-		
-		\item Déplacement de la vue sur le diagramme
-		\item Ajout, Suppression et Modification d'éléments
-	\end{itemize}
-	
-	
-\subsection{Fonctionnalités tactiles}
+La classe Procédure possède 3 attributs :
 \begin{itemize}
-\item Icône transparent dans le coin pour ouvrir le menu
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=10cm]{img/menu}
-			\caption{Maquette Colladia - Menu}
-		\end{figure}
-\item Ajout de formes prédéfinies (Classes UML, cercles, carrés, rectangles,...)
-\item Liste des utilisateurs présent sur un même diagramme :
-\begin{itemize}
-	\item Possibilité de suivre un utilisateur
-	\item Affichage de la vue d'un utilisateur
-\end{itemize}
+\item les listes des instructions, pour pouvoir visiter les nœuds fils de la procédure et les exécuter.
+\item une liste des identifiants des différents paramètres de la procédure.   
+\item un nœud Rends, qui n'est utilisé que par les fonctions, afin de récupérer la valeur renvoyée par le mot clef 'rends', pour que la fonction retourne cette valeur.
+\end{itemize} 
+%TODO parler de comment sont gérés les paramètres
 
-\item Un appui long sur un élément permet d'ouvrir un menu contextuel spécifique à l'élément :
-\begin{itemize}
-	\item Mettre au premier ou au dernier plan l'élément
-	\item Attirer l'attention des autres utilisateurs (à l'aide d'une flèche)
-	\item Permettre : la modification ou la suppression de l'élément
-\end{itemize}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=10cm]{img/modification}
-			\caption{Maquette Colladia - Modification d'éléments}
-		\end{figure}
-		
-		
-\item Un appui long dans le vide permet d'ajouter des éléments
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=10cm]{img/diagram-creation}
-			\caption{Maquette Colladia - Création d'éléments}
-		\end{figure}
-\item Un “double-tap” à 2 doigts permet de  passer du mode dessin au déplacement (et inversement)
-\item Un mouvement de slide permet de se déplacer sur la zone de dessin
-
-\begin{itemize}
-	\item si un élément est sélectionné alors on déplace ce dernier
-\end{itemize}
-
-\item Un appui sur un élément le sélectionne
-\begin{itemize}
-	\item en appuyant de nouveau sur un élément sélectionné ou sur un espace vide, on dé-sélectionne l'élément
-\end{itemize}
-
-\item Le mouvement de pinch habituel pour gérer les effets de zoom
-\begin{itemize}
-	\item si élément est sélectionné, ce mouvement peut aussi servir de redimensionnement 
-\end{itemize}
-
-\end{itemize}
+Ainsi avec ces différentes informations, il est possible d'exécuter une procédure lorsqu'un appel de cette dernière est réalisée.
 
 
-\subsection{Fonctionnalités optionnelles}
-Compte tenu des contraintes de temps imposé par le projet, il ne nous est pas possible d'entreprendre les différentes idées que nous avons eu pour améliorer l'expérience utilisateur.
+\section{Principe de fonctionnement de la pile d'exécution}
+%TODO
 
-Néanmoins, voici certaines améliorations que nous essayerions d'apporter à l'application dans la mesure du possible.
+\section{Principe de recherche d'une variable}
+%TODO
 
-\begin{itemize}
-\item un chat pour laisser la possibilité aux membres de communiquer
-\item l'utilisation de commandes vocales pour faciliter l'utilisation de l'application
-\item un système de commentaire sur les diagrammes, pour fournir des informations complémentaires
-\item une fonction de recherche de texte
-\item la fusion de diagramme
-\item l'exportation des diagrammes sous différents formats
-\item la gestion des utilisateurs et des droits
-\item la gestion des sauvegardes (automatique côté serveur)
-\item le dessin à main levé qui permet une reconnaissance de forme et d'ajout d'élément automatiquement
+\section{Principe expression 'loop'}
+L'expression 'loop' donne la possibilité de récupéré le nombre d'itérations qui ont été effectué dans la boucle 'répète'. Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelé.
+Cette technique fonctionnait, mais présentait un inconvénient majeur dès que des boucles 'répète' étaient imbriquées. Puisqu'il n'existait qu'une seule variable pour les différentes boucles, une fois remonté dans la hiérarchie de l'arborescence des boucles, il n'était pas possible de retrouver la valeur de l'itération de la boucle parente. 
 
-\end{itemize}
+Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajouté au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
 
+Les boucles peuvent être imbriquées sans perdre le compte dans le nombre des itérations. 
+
+\section{Principe retour des fonctions}
+%TODO
 
 
-
-
-
-\section{Technologies}
-Afin de proposer une application collaborative, la décision de réaliser une application client serveur a rapidement été prise.
-
-\subsection{Côté serveur}
-Le projet étant couplé avec celui de IA04, il faudra mettre en place un serveur sur lequel tournera une plateforme multi-agent, à savoir JADE. 
-Une API REST sera mise en place pour communiquer avec les différents clients.
-
-\subsection{Côté client}
-L'utilisateur aura accès à l'application sur une tablette ou un smartphone.  
-Le développement sur ces terminaux peut être réalisé de différentes manières.
-\begin{itemize}
-\item en natif : il aurait alors fallu développer en code natif directement. Ce type de développement oblige un travail de développement important pour le proposer sur diffèrent systèmes d'exploitation (iOS, Android,...). Cependant l'application réalisé est plus performante.
-\item en utilisant xamarin : ce mode de développement permet de générer du code natif dans les diverses plateformes existantes que ce soit iOS, Android ou WindowsPhone. 
-\item en utilisant cordova : le code obtenu donne l'aspect d'une application, mais il s'agit en réalité d'une webview. L'application peut aussi se révéler moins performante qu'une application native.
-
-\end{itemize}
-
-Après concertation il a été décidé de réaliser l'application cliente avec Xamarin.
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{img/Archi}
-	\caption{Schéma de l'architecture de Colladia : Client/Serveur}
-\end{figure}
+%\begin{figure}[!h]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{img/sondage_branche}
+%	\caption{Sondage - Répartition par branches}
+%\end{figure}
 
 % Commentaires
 \end{document}
