@@ -1,0 +1,35 @@
+delimiters "$", "$"
+logo(procedures,commandes) ::=<<
+  $procedures; separator = "\n"$
+  $commandes:com(); separator="\n"$
+>>
+com(c) ::=<<
+  fcc $c.couleur$
+  repete $c.facteur$ [ $c.id$ ($c.paramA$ $c.paramB$) td 360/$c.facteur$]
+>>
+rectangle() ::=<<
+pour rectangle :long :larg
+  av :long td 90 av :larg td 90
+  av :long td 90 av :larg td 90
+fin  
+>>
+pointh() ::=<<
+pour pointh :x :y
+  lc 
+  fpos [ :x :y ]
+  bc
+fin 
+>>
+pointb() ::=<<
+pour pointb :x :y
+  fpos [ :x :y ]
+fin 
+>>
+more(c) ::=<<
+  fcc $c.couleur$
+  repete $c.facteur$ [ $c.id$ ($c.paramA$ $c.paramB$) td 360/$c.facteur$]
+>>
+once(c) ::=<<
+  fcc $c.couleur$
+  $c.id$ ($c.paramA$ $c.paramB$)
+>>
