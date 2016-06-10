@@ -175,7 +175,30 @@ Cette technique fonctionnait, mais présentait un inconvénient majeur dès que 
 Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajouté au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
 
 Les boucles peuvent être imbriquées sans perdre le compte dans le nombre des itérations. 
-
+\begin{lstlisting}[language=LOGO]
+ve
+fpos [-200 0]
+repete 7
+[
+	fcc loop
+	repete 100
+	[
+		av 1*loop
+		td 300
+	]
+	fpos [(-200+100*(loop+1)) 0]	
+]
+\end{lstlisting}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/loop_figure}
+	\caption{Dessin - Exemple repete imbriquées avec utilisation de loop}
+\end{figure}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/loop_tree}
+	\caption{Arbre - Exemple repete imbriquées avec utilisation de loop}
+\end{figure}
 \section{Principe retour des fonctions}
 %TODO
 
