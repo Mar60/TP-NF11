@@ -98,12 +98,12 @@ instruction :
 Cette grammaire constitue la base du projet.
 
 \subsection{Descriptions expression}
-Les expressions sont constitué des différentes opérations et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
+Les expressions sont constituées des différentes opérations et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
 Il existe aussi les expressions booléenne qui renvoient false ou true (0 ou 1).
 Que se soit les expressions booléennes ou les expressions arithmétique, l'ordre est étudié pour prendre en compte la priorité des opérateurs. Par exemple l'opérateur de multiplication est prioritaire par rapport à celui d'addition.
 
 \subsection{Descriptions instructions}
-Les instructions correspondent aux directives sont appelées dans le programme. Elles permettent d'effectuer des actions comme par exemple d'avancer de 100 (av 100).
+Les instructions correspondent aux directives qui sont appelées dans le programme. Elles permettent d'effectuer des actions comme par exemple d'avancer de 100 (av 100).
 
 Il existe différents types d'instructions :
 \begin{itemize}
@@ -111,7 +111,7 @@ Il existe différents types d'instructions :
 	\item les boucles : 'repete' et 'tantque'
 	\item l'instruction 'donne' qui permet d'affecter à une variable une valeur
 	\item l'instruction de condition 'si', qui donne la possibilité de tester une expression booléenne et d'agir en conséquence
-	\item l'instruction qui permet de réaliser l'appel d'une procédure, qui a été défini
+	\item l'instruction qui permet de réaliser l'appel d'une procédure, qui a été défini avant le programme principal
 \end{itemize}
 
 \subsection{Descriptions méthodes}
@@ -133,7 +133,7 @@ Concernant les structures de données principales du projet, on peut référence
 Une Table des variables est composée d'une map avec comme clef l'identifiant de la variable associé à la valeur Double de la variable. Ainsi lorsque l'identifiant de la variable est appelé dans le programme il est possible de retrouver sa valeur efficacement.
 
 Initialement, il n'existait qu'une seule table des variables. Cependant lorsque les procédures et fonctions ont été mises en place il fallait trouver un moyen de gérer la portée des variables.
-Le choix a donc été réalisé de limiter la portée des variables dans le programme principal et dans les méthodes. 
+Le choix a donc été de limiter la portée des variables dans le programme principal et dans les méthodes. 
 
 Ainsi, il existe une pile contenant initialement la Table du programme principal. Dès qu'une procédure ou une fonction est appelée une nouvelle Table est ajoutée dans la pile.
 Lorsque l'on recherche la valeur d'une variable donnée, il faut observer uniquement la Table se situant sur le dessus de la pile. Ce qui permet de s'assurer qu'une variable ne sera pas utilisée en dehors de sa portée définie.
@@ -157,16 +157,31 @@ La classe Procédure possède 3 attributs :
 \item une liste des identifiants des différents paramètres de la procédure.   
 \item un nœud Rends, qui n'est utilisé que par les fonctions, afin de récupérer la valeur renvoyée par le mot clef 'rends', pour que la fonction retourne cette valeur.
 \end{itemize} 
-%TODO parler de comment sont gérés les paramètres
+
 
 Ainsi avec ces différentes informations, il est possible d'exécuter une procédure lorsqu'un appel de cette dernière est réalisée.
 
+Une procédure doit pouvoir recevoir des paramètres pour réaliser ses traitements.
+Lors de sa définition, on récupère les identifiants des paramètres que l'on place dans la liste des paramètres (List<String>). 
+Puis lors de l'appel de la procédure, pour chaque paramètre on crée une variable dans la Table des Variables avec la valeur passée en arguments de la procédure. 
+
+Les paramètres sont considérés comme des simples variables une fois le traitement de la procédure commencé.
+Le nombre d'arguments est testé pour vérifier qu'il y ait le nombre de paramètres requis.
+
+Pour éviter toute ambiguïté lors de l'appel d'une procédure ou d'une fonction, il faut passer entre parenthèses les arguments.  
 
 \section{Principe de fonctionnement de la pile d'exécution}
 %TODO
 
 \section{Principe de recherche d'une variable}
-%TODO
+Dans l'exemple ci-dessous on affecte à une variable size une valeur à deux reprises. Une fois dans le programme principale et une deuxième fois dans la procédure long().
+
+En réalité la variable n'est définie qu'une seule fois pour chacune des portée. Puisque comme nous l'avions vu précédemment une Table des Variables est créée pour chaque nouvelle procédure (la dernière Table de la pile est celle du programme principal).
+
+Pour affecter une valeur à une variable on utilise l'instruction 'donne "' suivie du nom de la variable et de sa valeur. La variable est inséré dans la Table du sommet de la pile.
+
+Afin de retrouver la variable lorsque la variable précédé de ':' dans le programme, il suffit de regarder dans la Table au sommet de la pile qui correspond à une Map. 
+L'identifiant de la variable permet de récupérer la valeur pour pouvoir l'utiliser ailleurs.
 \begin{lstlisting}[language=Python]
 pour long
 	donne size 50  av :size
