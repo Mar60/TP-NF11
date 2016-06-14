@@ -25,7 +25,7 @@ Ce document constitue le rapport du projet de NF11. Au cours de ce projet l'obje
 \section{Grammaire}
 Ci-dessous figure la grammaire de notre projet, suivie d'une description synthétique des différents éléments la composant.
 
-\begin{lstlisting}[language=LOGO]
+\begin{lstlisting}[language=Python]
 grammar Logo; 
 
 @header {
@@ -175,7 +175,7 @@ Cette technique fonctionnait, mais présentait un inconvénient majeur dès que 
 Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajouté au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
 
 Les boucles peuvent être imbriquées sans perdre le compte dans le nombre des itérations. 
-\begin{lstlisting}[language=LOGO]
+\begin{lstlisting}[language=Python]
 ve
 fpos [-200 0]
 repete 7
@@ -189,19 +189,54 @@ repete 7
 	fpos [(-200+100*(loop+1)) 0]	
 ]
 \end{lstlisting}
+
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{img/loop_figure}
-	\caption{Dessin - Exemple repete imbriquées avec utilisation de loop}
+	\begin{subfigure}[t]{.5\textwidth}
+		\includegraphics[width=\textwidth]{img/loop_figure}
+		\subcaption{Dessin}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.7\textwidth}
+		\includegraphics[width=\textwidth]{img/loop_tree}
+		\subcaption{Arbre}
+	\end{subfigure}
+	\caption{Exemple repete imbriquées avec utilisation de loop}
 \end{figure}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{img/loop_tree}
-	\caption{Arbre - Exemple repete imbriquées avec utilisation de loop}
-\end{figure}
+
 \section{Principe retour des fonctions}
 %TODO
-
+\begin{lstlisting}[language=Python]
+pour draw :cote :couleur
+	fcc :couleur
+	repete 6 
+	[ av :cote  	td 360/6 ]
+fin
+pour doubleDraw :n :iteration
+	donne t  :n*2
+	si :iteration > 0 
+		[draw (
+			doubleDraw (	:t  (:iteration - 1))
+			 :iteration )
+		]
+	rends :t
+fin
+ve
+doubleDraw (1 6)
+\end{lstlisting}
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}[t]{.2\textwidth}
+		\includegraphics[width=\textwidth]{img/function_figure}
+		\subcaption{Dessin}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{\textwidth}
+		\includegraphics[width=\textwidth]{img/function_tree}
+		\subcaption{Arbre}
+	\end{subfigure}
+	\caption{Exemple fonctions récursives}
+\end{figure}
 
 % Commentaires
 \end{document}
