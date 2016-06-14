@@ -167,6 +167,28 @@ Ainsi avec ces différentes informations, il est possible d'exécuter une procé
 
 \section{Principe de recherche d'une variable}
 %TODO
+\begin{lstlisting}[language=Python]
+pour long
+	donne size 50  av :size
+fin
+ve
+donne size 10 
+long() 
+fpos [10 0] av :size
+\end{lstlisting}
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}[t]{.15\textwidth}
+		\includegraphics[width=\textwidth]{img/var_figure}
+		\subcaption{Dessin}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.7\textwidth}
+		\includegraphics[width=\textwidth]{img/var_tree}
+		\subcaption{Arbre}
+	\end{subfigure}
+	\caption{Exemple de recherche d'une variable}
+\end{figure}
 
 \section{Principe expression 'loop'}
 L'expression 'loop' donne la possibilité de récupéré le nombre d'itérations qui ont été effectué dans la boucle 'répète'. Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelé.
