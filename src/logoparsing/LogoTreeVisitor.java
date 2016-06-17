@@ -397,7 +397,6 @@ public class LogoTreeVisitor extends LogoBaseVisitor<Integer> {
 			}
 			visit(procedure.getNoeudRends());
 			double result = getAttValue(procedure.getNoeudRends());
-			//double result = getAttValue(procedure.listeInstructions.instruction(procedure.listeInstructions.getChildCount()-1));
 			Log.append("result: "+result+"\n" );
 			setAttValue(ctx,result);
 			pileTableVariable.pop();
