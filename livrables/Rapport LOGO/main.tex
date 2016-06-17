@@ -173,6 +173,7 @@ Pour éviter toute ambiguïté lors de l'appel d'une procédure ou d'une fonctio
 \section{Principe de fonctionnement de la pile d'exécution}
 %TODO
 
+
 \section{Principe de recherche d'une variable}
 Dans l'exemple ci-dessous on affecte à une variable size une valeur à deux reprises. Une fois dans le programme principale et une deuxième fois dans la procédure long().
 
@@ -206,10 +207,10 @@ fpos [10 0] av :size
 \end{figure}
 
 \section{Principe expression 'loop'}
-L'expression 'loop' donne la possibilité de récupéré le nombre d'itérations qui ont été effectué dans la boucle 'répète'. Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelé.
+L'expression 'loop' donne la possibilité de récupérer le nombre d'itérations qui ont été effectuées dans la boucle 'répète'. Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelée. \\
 Cette technique fonctionnait, mais présentait un inconvénient majeur dès que des boucles 'répète' étaient imbriquées. Puisqu'il n'existait qu'une seule variable pour les différentes boucles, une fois remonté dans la hiérarchie de l'arborescence des boucles, il n'était pas possible de retrouver la valeur de l'itération de la boucle parente. 
 
-Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajouté au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
+Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajoutée au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
 
 Les boucles peuvent être imbriquées sans perdre le compte dans le nombre des itérations. 
 \begin{lstlisting}[language=Python]
@@ -243,6 +244,8 @@ repete 7
 
 \section{Principe retour des fonctions}
 %TODO
+Les fonctions sont déclarées de la même manière que les procédures, à la différence près qu'elles contiennent une instruction rends en fin de déclaration, avant "fin". Cependant, leur appel est différent. Comme nous l'avons vu précédemment, alors que l'appel des procédures se fait au niveau des instructions, celui des fonctions se fait au niveau des expressions, car son retour doit être évalué comme tel.
+
 \begin{lstlisting}[language=Python]
 pour draw :cote :couleur
 	fcc :couleur
