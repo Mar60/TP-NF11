@@ -100,7 +100,7 @@ Cette grammaire constitue la base du projet.
 \subsection{Descriptions expression}
 Les expressions sont constituées des différentes opérations et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
 Il existe aussi les expressions booléenne qui renvoient false ou true (0 ou 1).
-Que se soit les expressions booléennes ou les expressions arithmétique, l'ordre est étudié pour prendre en compte la priorité des opérateurs. Par exemple l'opérateur de multiplication est prioritaire par rapport à celui d'addition.
+Que se soit les expressions booléennes ou les expressions arithmétiques, l'ordre est étudié pour prendre en compte la priorité des opérateurs. Par exemple l'opérateur de multiplication est prioritaire par rapport à celui d'addition.
 
 \subsection{Descriptions instructions}
 Les instructions correspondent aux directives qui sont appelées dans le programme. Elles permettent d'effectuer des actions comme par exemple d'avancer de 100 (av 100).
@@ -115,7 +115,7 @@ Il existe différents types d'instructions :
 \end{itemize}
 
 \subsection{Descriptions méthodes}
-Il est possible de définir une ou plusieurs méthodes que se soit des fonctions ou des procédures. La définition des méthodes doit être faite avant le programme principal.
+Il est possible de définir une ou plusieurs méthodes que sont soit des fonctions ou des procédures. La définition des méthodes doit être faite avant le programme principal.
 
 Les fonctions doivent renvoyer une valeur, pour ce faire elles doivent utiliser le mot-clef 'rends' qui correspond au terme return dans la plupart des langages, excepté qu'il doit être utilisé juste avant le mot-clef 'fin'.
 Puisqu'une fonction doit renvoyer une valeur, on considère que l'appel de la fonction est une expression.
@@ -142,9 +142,9 @@ Lorsque le traitement de la fonction ou de la procédure est finie, il faut reti
 
 
 \subsection{Pile Répète}
-Cette pile permet de conserver le nombre d'itérations qui ont été effectué. Ce qui permet de récupérer cette valeur avec l'expression 'loop'. Quand bien même des instructions 'répète' seraient imbriquées.
+Cette pile permet de conserver le nombre d'itérations qui ont été effectuées, ce qui permet de récupérer cette valeur avec l'expression 'loop'. Quand bien même des instructions 'répète' seraient imbriquées.
 
-À chaque itération de la boucle, l'index d'itération est ajouté en haut de la pile, puis les instructions sont exécutés. Lorsque les instructions sont finis la valeur en haut de la pile est retirée, puis si la boucle n'est pas finie il faut recommencer. 
+À chaque itération de la boucle, l'index d'itération est ajouté en haut de la pile, puis les instructions sont exécutées. Lorsque les instructions sont finies, la valeur en haut de la pile est retirée puis, si la boucle n'est pas finie, il faut recommencer. 
 
 \subsection{Table des Procédures}
 Les procédures (et fonctions) posent un nouveau problème, puisque leurs définitions sont réalisées avant le programme principal, mais elles ne sont exécutées que lors de l'appel de ces derniers.
@@ -178,7 +178,7 @@ Dans l'exemple ci-dessous on affecte à une variable size une valeur à deux rep
 
 En réalité la variable n'est définie qu'une seule fois pour chacune des portée. Puisque comme nous l'avions vu précédemment une Table des Variables est créée pour chaque nouvelle procédure (la dernière Table de la pile est celle du programme principal).
 
-Pour affecter une valeur à une variable on utilise l'instruction 'donne "' suivie du nom de la variable et de sa valeur. La variable est inséré dans la Table du sommet de la pile.
+Pour affecter une valeur à une variable on utilise l'instruction 'donne "' suivie du nom de la variable et de sa valeur. La variable est insérée dans la Table du sommet de la pile.
 
 Afin de retrouver la variable lorsque la variable précédé de ':' dans le programme, il suffit de regarder dans la Table au sommet de la pile qui correspond à une Map. 
 L'identifiant de la variable permet de récupérer la valeur pour pouvoir l'utiliser ailleurs.
