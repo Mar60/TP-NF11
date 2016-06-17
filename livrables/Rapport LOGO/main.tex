@@ -27,7 +27,6 @@ Ci-dessous figure la grammaire de notre projet, suivie d'une description synthé
 
 \begin{lstlisting}[language=Python]
 grammar Logo; 
-
 @header {
   package logoparsing;
 }
@@ -56,15 +55,13 @@ expbool : '!'expbool									 #logiqueNegation
         | '(' expbool ')'                                #logiqueParent
         | exp ('<' | '>' | '<='| '>=' | '!=' | '==') exp #boolOperation
         ;
-
-
+        
 programme : methodes? liste_instructions
 ;
 
 methodes :
   (pour)+
 ;
-
 pour :
   'pour' ID (':'ID)* (liste_instructions)? (rends)? 'fin'
 ;
@@ -91,14 +88,13 @@ instruction :
   | 'si' expbool '[' liste_instructions ']' ('[' liste_instructions ']')? #si
   | 'tantque' expbool '[' liste_instructions ']' #tantque
   | ID '('(exp)*')' #appelPour
-
 ;
-   \end{lstlisting}
+\end{lstlisting}
 
 Cette grammaire constitue la base du projet.
 
 \subsection{Descriptions expression}
-Les expressions sont constituées des différentes opérations et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
+Les expressions sont constituées des différentes opérations arithmétiques et de mots clefs permettant de retourner une valeur (ex : hasard). Les appels de fonctions sont aussi contenus dans les expressions puisque ces derniers doivent retourner une valeur.
 Il existe aussi les expressions booléenne qui renvoient false ou true (0 ou 1).
 Que se soit les expressions booléennes ou les expressions arithmétiques, l'ordre est étudié pour prendre en compte la priorité des opérateurs. Par exemple l'opérateur de multiplication est prioritaire par rapport à celui d'addition.
 
@@ -121,7 +117,7 @@ Les fonctions doivent renvoyer une valeur, pour ce faire elles doivent utiliser 
 Puisqu'une fonction doit renvoyer une valeur, on considère que l'appel de la fonction est une expression.
 L'appel d'une procédure est traitée comme une instruction normale.
 
-Il est possible de passer aux méthodes plusieurs paramètres. Pour éviter toute ambiguïté il est nécessaire de passer les paramètres de la méthodes entre parenthèses.  
+Il est possible de passer aux méthodes plusieurs paramètres. Pour éviter toute ambiguïté il est nécessaire de passer les paramètres de la méthode entre parenthèses.  
 
 
 
@@ -146,10 +142,11 @@ Cette pile permet de conserver le nombre d'itérations qui ont été effectuées
 
 À chaque itération de la boucle, l'index d'itération est ajouté en haut de la pile, puis les instructions sont exécutées. Lorsque les instructions sont finies, la valeur en haut de la pile est retirée puis, si la boucle n'est pas finie, il faut recommencer. 
 
+
 \subsection{Table des Procédures}
 Les procédures (et fonctions) posent un nouveau problème, puisque leurs définitions sont réalisées avant le programme principal, mais elles ne sont exécutées que lors de l'appel de ces derniers.
 
-La solution adoptée, est de stocker dans une Map l'identifiant de la procédure comme clef. La valeur associé dans la Map correspond à la classe Procédure.
+La solution adoptée, est de les stocker dans une Map. En utilisant l'identifiant de la procédure comme clef et sa valeur associée qui correspond à une instance de la classe Procédure.
 
 La classe Procédure possède 3 attributs :
 \begin{itemize}
@@ -175,21 +172,21 @@ Pour éviter toute ambiguïté lors de l'appel d'une procédure ou d'une fonctio
 
 
 \section{Principe de recherche d'une variable}
-Dans l'exemple ci-dessous on affecte à une variable size une valeur à deux reprises. Une fois dans le programme principale et une deuxième fois dans la procédure long().
+Dans l'exemple ci-dessous on affecte à une variable size une valeur à deux reprises. Une fois dans le programme principale et une deuxième fois dans la procédure longueur().
 
 En réalité la variable n'est définie qu'une seule fois pour chacune des portée. Puisque comme nous l'avions vu précédemment une Table des Variables est créée pour chaque nouvelle procédure (la dernière Table de la pile est celle du programme principal).
 
 Pour affecter une valeur à une variable on utilise l'instruction 'donne "' suivie du nom de la variable et de sa valeur. La variable est insérée dans la Table du sommet de la pile.
 
-Afin de retrouver la variable lorsque la variable précédé de ':' dans le programme, il suffit de regarder dans la Table au sommet de la pile qui correspond à une Map. 
+Afin de retrouver la variable lorsque la variable est précédée de ':' dans le programme, il suffit de regarder dans la Table au sommet de la pile qui correspond à une Map. 
 L'identifiant de la variable permet de récupérer la valeur pour pouvoir l'utiliser ailleurs.
 \begin{lstlisting}[language=Python]
-pour long
+pour longueur
 	donne size 50  av :size
 fin
 ve
 donne size 10 
-long() 
+longueur() 
 fpos [10 0] av :size
 \end{lstlisting}
 \begin{figure}[!h]
@@ -207,10 +204,15 @@ fpos [10 0] av :size
 \end{figure}
 
 \section{Principe expression 'loop'}
-L'expression 'loop' donne la possibilité de récupérer le nombre d'itérations qui ont été effectuées dans la boucle 'répète'. Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelée. \\
+L'expression 'loop' donne la possibilité de récupérer le nombre d'itérations qui ont été effectuées dans la boucle 'répète'. 
+
+Initialement, il y avait une variable au niveau du LogoTreeVisitor qui stockait la valeur de l'itération de la boucle 'répète'. Il ne restait plus qu'à retourner cette valeur lorsque 'loop' était appelée. 
+
 Cette technique fonctionnait, mais présentait un inconvénient majeur dès que des boucles 'répète' étaient imbriquées. Puisqu'il n'existait qu'une seule variable pour les différentes boucles, une fois remonté dans la hiérarchie de l'arborescence des boucles, il n'était pas possible de retrouver la valeur de l'itération de la boucle parente. 
 
-Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajoutée au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
+Afin de résoudre ce problème, une pile a été créée. Dès qu'une boucle commence la valeur de l'itération est ajoutée au dessus de la pile, les instructions sont exécutées, et avant la prochaine itération la valeur au dessus de la pile est retirée. 
+
+Ainsi, lorsque 'loop' observe la valeur au sommet de la pile, il s'agira de la valeur de l'itération de la boucle courante.
 
 Les boucles peuvent être imbriquées sans perdre le compte dans le nombre des itérations. 
 \begin{lstlisting}[language=Python]
@@ -243,8 +245,13 @@ repete 7
 \end{figure}
 
 \section{Principe retour des fonctions}
-%TODO
-Les fonctions sont déclarées de la même manière que les procédures, à la différence près qu'elles contiennent une instruction rends en fin de déclaration, avant "fin". Cependant, leur appel est différent. Comme nous l'avons vu précédemment, alors que l'appel des procédures se fait au niveau des instructions, celui des fonctions se fait au niveau des expressions, car son retour doit être évalué comme tel.
+Les fonctions sont déclarées de la même manière que les procédures, à la différence près qu'elles contiennent une instruction rends en fin de déclaration, avant 'fin'. Cependant, leur appel est différent. Comme nous l'avons vu précédemment, alors que l'appel des procédures se fait au niveau des instructions, celui des fonctions se fait au niveau des expressions, car son retour doit être évalué comme tel.
+
+'rends' est traitée comme une directive particulière et non comme une instruction, afin de pouvoir différencier les fonctions des procédures à leur déclaration, et éviter que cette directive soit incluse dans la liste des instructions de la fonction.
+
+Lors de l'appel de la fonction, la valeur évaluée par rends à partir de son expression associée est retournée.
+
+Une fonction peut n'avoir que 'rends' et pas d'instruction,contrairement à une procédure, dans notre implémentation.
 
 \begin{lstlisting}[language=Python]
 pour draw :cote :couleur
