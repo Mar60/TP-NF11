@@ -168,7 +168,22 @@ Le nombre d'arguments est testé pour vérifier qu'il y ait le nombre de paramè
 Pour éviter toute ambiguïté lors de l'appel d'une procédure ou d'une fonction, il faut passer entre parenthèses les arguments.  
 
 \section{Principe de fonctionnement de la pile d'exécution}
-%TODO
+Pour comprendre le fonctionnement de la pile d'exécution, il faut se rappeler de la Table des Procédures et de La Table des Variables.
+
+Les procédures (et fonctions) sont définis et insérés dans la Table des Procédures comme nous l'avions vu, ce qui permet de les retrouver après coup.
+
+Lorsque l'on arrive dans le programme principal la pile des Table de Variable est déjà initialisée avec la Table des variables de base, qui est toujours présente.
+
+Puis à l'appel d'une procédure ou d'une fonction, une nouvelle Table des variables est insérée dans la pile et ceci pour chaque appel (même ceux récursif).
+
+L'appel d'une procédure utilise la Table des procédures pour rechercher l'instance de la classe Procedure associée.
+
+Finalement, on visite les instructions de la procédure qui sont stockées sous forme de nœud dans l'objet. Cette visite des instructions reste identique à celle effectué par la visite des instructions du programme principal, cela pour s'assurer d'un fonctionnement cohérent.
+
+Lorsqu'une procédure a terminé son traitement, elle retire sa Table des Variables de la pile pour permettre au contexte précédent (programme principal ou une autre procédure qui l'a exécuté) de retrouver ses variables et de pouvoir s'exécuter correctement.
+
+
+
 
 
 \section{Principe de recherche d'une variable}
