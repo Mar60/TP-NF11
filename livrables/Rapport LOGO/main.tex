@@ -213,7 +213,7 @@ fpos [10 0] av :size
 	\end{subfigure}
 	\caption{Exemple de recherche d'une variable}
 \end{figure}
-
+\newpage
 \section{Principe expression 'loop'}
 L'expression 'loop' donne la possibilité de récupérer le nombre d'itérations qui ont été effectuées dans la boucle 'répète'. 
 
@@ -255,14 +255,23 @@ repete 7
 	\caption{Exemple repete imbriquées avec utilisation de loop}
 \end{figure}
 
+
+\newpage
 \section{Principe retour des fonctions}
-Les fonctions sont déclarées de la même manière que les procédures, à la différence près qu'elles contiennent une instruction rends en fin de déclaration, avant 'fin'. Cependant, leur appel est différent. Comme nous l'avons vu précédemment, alors que l'appel des procédures se fait au niveau des instructions, celui des fonctions se fait au niveau des expressions, car son retour doit être évalué comme tel.
+Les fonctions sont déclarées de la même manière que les procédures, à la différence près qu'elles contiennent une directive 'rends' en fin de déclaration, avant 'fin'. 
+
+Cependant, leur appel est différent. Comme nous l'avons vu précédemment, alors que l'appel des procédures se fait au niveau des instructions, celui des fonctions se fait au niveau des expressions, car leur retour doit être évalué comme tel.
 
 'rends' est traitée comme une directive particulière et non comme une instruction, afin de pouvoir différencier les fonctions des procédures à leur déclaration, et éviter que cette directive soit incluse dans la liste des instructions de la fonction.
 
-Lors de l'appel de la fonction, la valeur évaluée par rends à partir de son expression associée est retournée.
+Lors de l'appel de la fonction, les instructions sont évaluées de la même façon que dans les procédures. Néanmoins arrivé à la directive 'rends', on évalue l'expression donné en paramètre de la directive, puis on utilise retourne cette valeur au parent de la même manière que les expressions (setAttValue()). De cette manière la fonction peut récupérer cette valeur et la retourner à son parent de la même façon.
 
-Une fonction peut n'avoir que 'rends' et pas d'instruction,contrairement à une procédure, dans notre implémentation.
+Dans notre implémentation une fonction peut ne posséder que 'rends' comme directive et aucune instructions.
+
+De plus, grâce à l'implémentation réalisée il est possible qu'une fonction bien que retournant une valeur, puisse être appelée sans que l'on récupère cette valeur. Elle est dans ce cas traitée comme une procédure. 
+On peut observer ce cas de figure dans l'exemple ci-dessous. La fonction doubleDraw est considérée comme une procédure par le programme principal, mais comme une fonction dans sa définition (lors de l'appel récursif).
+
+Cette fonctionnalité est intéressante et correspond à ce qui est réalisé dans la plupart des langages où il n'est pas nécessaire de vouloir récupérer la valeur de retour d'une fonction.
 
 \begin{lstlisting}[language=Python]
 pour draw :cote :couleur
